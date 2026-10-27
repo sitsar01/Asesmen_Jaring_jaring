@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<title>Asesmen Jaring-Jaring Bangun Ruang</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFBF0; --surface:#FFFFFF; --surface2:#FFF3D6; --ink:#1A2E2A; --muted:#5B6B66; --line:#E8DDC3;
+  --teal:#0F766E; --teal-dark:#0B5E57; --teal-light:#CCEBE6; --amber:#F59E0B; --amber-light:#FEF3C7; --coral:#E85D4D; --coral-light:#FDE8E5; --green:#16A34A; --green-light:#DCFCE7; --radius:20px;
+  --shadow:0 8px 30px rgba(26,46,42,.10);
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0F1B19; --surface:#182824; --surface2:#1E332E; --ink:#EAF6F2; --muted:#A8BEB8; --line:#2A453F; --teal:#2DD4BF; --teal-dark:#5EEAD4; --teal-light:#134E4A; --amber-light:#451A03; --coral-light:#451A12; --green-light:#052E16; --shadow:0 8px 30px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.6}
+h1,h2,h3{font-family:Nunito,system-ui,sans-serif;line-height:1.15;margin:0}
+button{font:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.wrap{max-width:980px;margin:0 auto;padding:20px 18px 48px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:6px 0 18px}
+.logo{display:flex;align-items:center;gap:10px;font-family:Nunito;font-weight:900;font-size:15px;letter-spacing:.02em}
+.logo-badge{width:38px;height:38px;background:var(--teal);color:white;display:grid;place-items:center;border-radius:11px;font-size:20px}
+.badge{font-size:12px;font-weight:700;background:var(--amber-light);color:#92400E;border:1px solid #FDE68A;padding:6px 10px;border-radius:999px;white-space:nowrap}
+@media(prefers-color-scheme:dark){.badge{color:#FCD34D;border-color:#78350F}}
+.hero{background:var(--teal);color:white;border-radius:28px;padding:28px 24px 24px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-30px;top:-30px;width:180px;height:180px;border:28px solid rgba(255,255,255,.12);border-radius:50%;pointer-events:none}
+.hero h1{font-size:36px;letter-spacing:-.02em;max-width:620px}
+.hero p{opacity:.92;max-width:620px;margin:10px 0 0;font-size:15.5px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;position:relative;z-index:1}
+.chip{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:7px 12px;border-radius:999px;font-size:13px;font-weight:700}
+.net-preview{display:flex;gap:18px;align-items:center;margin-top:20px;background:rgba(255,255,255,.12);border-radius:16px;padding:14px;position:relative;z-index:1}
+.cube-net{display:grid;grid-template-columns:repeat(4,22px);grid-template-rows:repeat(3,22px);gap:3px;flex-shrink:0}
+.cube-net i{background:#FDE68A;border:2px solid #fff;border-radius:4px;display:block}
+.cube-net i:nth-child(1){grid-column:2;grid-row:1}.cube-net i:nth-child(2){grid-column:1;grid-row:2}.cube-net i:nth-child(3){grid-column:2;grid-row:2}.cube-net i:nth-child(4){grid-column:3;grid-row:2}.cube-net i:nth-child(5){grid-column:4;grid-row:2}.cube-net i:nth-child(6){grid-column:2;grid-row:3}
+.net-preview p{margin:0;font-size:13.5px;line-height:1.5;opacity:.95}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+@media(max-width:640px){.mode-grid{grid-template-columns:1fr}.hero h1{font-size:30px}.hero{padding:22px 18px}}
+.mode-card{background:var(--surface);border:1.5px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);text-align:left;width:100%;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.mode-card:hover{border-color:var(--teal)}
+.mode-card:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.mode-icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:26px;margin-bottom:12px}
+.mode-card h3{font-size:20px}
+.mode-card p{color:var(--muted);font-size:14px;margin:6px 0 14px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:999px;padding:12px 20px;font-weight:800;font-size:14.5px}
+.btn-teal{background:var(--teal);color:white}.btn-amber{background:var(--amber);color:#451A03}.btn-outline{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.progress-wrap{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-top:18px}
+.progress-top{display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--muted)}
+.progress{height:10px;background:var(--surface2);border-radius:999px;overflow:hidden;margin-top:8px}
+.progress-bar{height:100%;background:var(--teal);border-radius:999px;transition:width .4s}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:14px;box-shadow:var(--shadow)}
+.q-label{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+.q-text{font-size:19px;font-weight:800;font-family:Nunito;margin:8px 0 6px;line-height:1.4}
+.q-visual{display:flex;justify-content:center;padding:10px 0 4px}
+.options{display:grid;gap:10px;margin-top:14px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:14px 14px;font-weight:600}
+.opt:hover{border-color:var(--teal)}
+.opt .letter{width:30px;height:30px;flex-shrink:0;border-radius:50%;background:var(--surface2);display:grid;place-items:center;font-weight:900;font-size:13px}
+.opt.correct{border-color:var(--green);background:var(--green-light)}
+.opt.correct .letter{background:var(--green);color:white}
+.opt.wrong{border-color:var(--coral);background:var(--coral-light)}
+.opt.wrong .letter{background:var(--coral);color:white}
+.opt.dim{opacity:.55}
+.feedback{margin-top:14px;border-radius:14px;padding:14px 16px;font-size:14.5px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:var(--green-light);border:1px solid #86EFAC}
+.feedback.no{background:var(--coral-light);border:1px solid #FCA5A5}
+.feedback strong{display:block;margin-bottom:2px}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:16px;flex-wrap:wrap}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+@media(max-width:560px){.match-grid{grid-template-columns:1fr 1fr;gap:10px}.match-item{font-size:13.5px!important;padding:12px!important}}
+.match-col h4{margin:0 0 10px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.match-list{display:grid;gap:9px}
+.match-item{width:100%;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:13px;padding:13px 14px;font-weight:700;font-size:14.5px}
+.match-item.selected{border-color:var(--amber);background:var(--amber-light);outline:2px solid var(--amber)}
+.match-item.matched{border-color:var(--green);background:var(--green-light);opacity:.85;pointer-events:none}
+.match-item.shake{animation:shake .35s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.result{text-align:center;padding:10px 0}
+.score-big{font-family:Nunito;font-size:56px;font-weight:900;line-height:1;color:var(--teal)}
+.stars{font-size:28px;letter-spacing:4px;margin:8px 0}
+.hidden{display:none!important}
+.review{ text-align:left;margin-top:16px;display:grid;gap:10px}
+.review-item{border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14px}
+.review-item b{display:block}
+.tag{font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px}
+.tag-ok{background:var(--green-light);color:var(--green)} .tag-no{background:var(--coral-light);color:var(--coral)}
+.footer-note{color:var(--muted);font-size:13px;text-align:center;margin-top:22px}
+.kbd{font-size:12px;background:var(--surface2);padding:2px 7px;border-radius:6px}
+@media(prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="logo"><span class="logo-badge">⬡</span> ASESMEN MATEMATIKA</div>
+    <span class="badge">Kelas 5–6 • Bangun Ruang</span>
+  </div>
+
+  <!-- HOME -->
+  <section id="view-home">
+    <div class="hero">
+      <h1>Jaring-Jaring Bangun Ruang</h1>
+      <p>Uji pemahamanmu tentang jaring-jaring kubus, balok, prisma segitiga, limas segiempat, tabung, kerucut, dan bola. Ada kuis pilihan ganda dan permainan memasangkan — seperti di Wordwall, tetapi langsung di sini.</p>
+      <div class="hero-stats"><span class="chip">📝 Kuis — 15 soal</span><span class="chip">🧩 Pasangkan — 8 pasangan</span><span class="chip">⭐ Skor &amp; pembahasan</span></div>
+      <div class="net-preview">
+        <div class="cube-net" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <p><strong>Ingat kuncinya:</strong> sisi yang bertemu saat dilipat harus sama panjang, tidak boleh tumpang tindih, dan tidak boleh ada celah. Jaring-jaring kubus yang sahih ada 11 pola.</p>
+      </div>
+    </div>
+
+    <div class="mode-grid">
+      <div class="mode-card" id="card-quiz" role="button" tabindex="0" aria-label="Mulai Kuis Pilihan Ganda">
+        <div class="mode-icon" style="background:#CCEBE6">📝</div>
+        <h3>1 — Kuis Pilihan Ganda</h3>
+        <p>15 soal tentang bentuk jaring-jaring, sisi berhadapan, selimut tabung dan kerucut, sampai alasan bola tidak punya jaring-jaring yang tepat. Setiap jawaban langsung diberi alasan.</p>
+        <span class="btn btn-teal">Mulai Kuis →</span>
+      </div>
+      <div class="mode-card" id="card-match" role="button" tabindex="0" aria-label="Mulai Permainan Pasangkan">
+        <div class="mode-icon" style="background:#FEF3C7">🧩</div>
+        <h3>2 — Permainan Pasangkan</h3>
+        <p>Pasangkan nama bangun ruang dengan susunan jaring-jaringnya. Ketuk satu kartu di kiri, lalu pasangannya di kanan. Selesaikan semua 8 pasangan.</p>
+        <span class="btn btn-amber">Mulai Pasangkan →</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:16px">Cara Bermain</h3>
+      <p style="color:var(--muted);font-size:14.5px;margin:8px 0 0">Di HP maupun laptop caranya sama. Untuk kuis, pilih satu jawaban — kamu langsung tahu benar atau salah beserta alasannya, lalu tekan <span class="kbd">Soal Berikutnya</span>. Untuk permainan Pasangkan, selesaikan semua pasangan untuk melihat skor akhirmu. Di akhir setiap permainan ada tombol <strong>Ulangi</strong> untuk mencoba lagi.</p>
+    </div>
+    <p class="footer-note">Materi: jaring-jaring kubus, balok, prisma segitiga, limas segiempat, tabung, kerucut, dan bola.</p>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="view-quiz" class="hidden">
+    <div class="progress-wrap">
+      <div class="progress-top"><span id="q-progress-label">Soal 1 dari 15</span><span id="q-score-label">Skor: 0</span></div>
+      <div class="progress"><div class="progress-bar" id="q-bar" style="width:6%"></div></div>
+    </div>
+    <div class="card" id="quiz-card">
+      <div class="q-label" id="q-topic">Kubus</div>
+      <div class="q-text" id="q-text"></div>
+      <div class="q-visual" id="q-visual"></div>
+      <div class="options" id="q-options"></div>
+      <div class="feedback" id="q-feedback"></div>
+      <div class="actions">
+        <button type="button" class="btn btn-outline" data-action="home">← Menu Utama</button>
+        <button type="button" class="btn btn-teal" id="q-next" disabled data-action="next">Soal Berikutnya →</button>
+      </div>
+    </div>
+    <div class="card hidden" id="quiz-result">
+      <div class="result">
+        <div style="font-size:40px">🏆</div>
+        <h2 style="margin-top:6px">Kuis Selesai!</h2>
+        <div class="stars" id="q-stars">★★★</div>
+        <div class="score-big" id="q-final-score">0 / 15</div>
+        <p id="q-final-msg" style="color:var(--muted);max-width:520px;margin:10px auto 0"></p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px">
+          <button type="button" class="btn btn-teal" data-action="quiz">↻ Ulangi Kuis</button>
+          <button type="button" class="btn btn-amber" data-action="match">Lanjut ke Pasangkan →</button>
+          <button type="button" class="btn btn-outline" data-action="home">Menu Utama</button>
+        </div>
+      </div>
+      <div class="review" id="q-review"></div>
+    </div>
+  </section>
+
+  <!-- MATCH -->
+  <section id="view-match" class="hidden">
+    <div class="progress-wrap">
+      <div class="progress-top"><span id="m-progress-label">Terpasang: 0 dari 8</span><span id="m-score-label">Percobaan: 0 • Salah: 0</span></div>
+      <div class="progress"><div class="progress-bar" id="m-bar" style="width:0%;background:var(--amber)"></div></div>
+    </div>
+    <div class="card">
+      <div class="q-label" style="color:#B45309">Permainan Pasangkan</div>
+      <h2 style="font-size:20px;margin-top:6px">Pasangkan bangun ruang dengan jaring-jaringnya</h2>
+      <p style="color:var(--muted);font-size:14.5px;margin:6px 0 0">Ketuk satu kartu nama bangun di sebelah kiri, kemudian ketuk susunan jaring-jaring yang tepat di sebelah kanan.</p>
+      <div class="feedback" id="m-feedback"></div>
+      <div class="match-grid">
+        <div class="match-col"><h4>Bangun Ruang</h4><div class="match-list" id="m-left"></div></div>
+        <div class="match-col"><h4>Jaring-Jaringnya</h4><div class="match-list" id="m-right"></div></div>
+      </div>
+      <div class="actions">
+        <button type="button" class="btn btn-outline" data-action="home">← Menu Utama</button>
+        <button type="button" class="btn btn-amber" data-action="match">↻ Acak &amp; Ulangi</button>
+      </div>
+    </div>
+    <div class="card hidden" id="match-result">
+      <div class="result">
+        <div style="font-size:40px">🎉</div>
+        <h2 style="margin-top:6px">Semua Pasangan Ditemukan!</h2>
+        <div class="score-big" id="m-final-score">8 / 8</div>
+        <p id="m-final-msg" style="color:var(--muted);max-width:520px;margin:10px auto 0"></p>
+        <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px">
+          <button type="button" class="btn btn-amber" data-action="match">↻ Ulangi Pasangkan</button>
+          <button type="button" class="btn btn-teal" data-action="quiz">Lanjut ke Kuis →</button>
+          <button type="button" class="btn btn-outline" data-action="home">Menu Utama</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+var QUESTIONS=[
+ {topic:"Kubus", q:"Jaring-jaring kubus terdiri atas …", opts:["4 buah persegi","6 buah persegi yang sama besar","6 buah persegi panjang","8 buah segitiga"], ans:1, why:"Kubus memiliki 6 sisi berbentuk persegi yang semuanya sama besar, sehingga jaring-jaringnya terdiri atas 6 persegi."},
+ {topic:"Kubus", q:"Banyak pola jaring-jaring kubus yang berbeda dan dapat dilipat menjadi kubus adalah …", opts:["6 pola","8 pola","11 pola","12 pola"], ans:2, why:"Dari semua susunan 6 persegi, hanya ada 11 pola berbeda yang dapat dilipat menjadi kubus tertutup."},
+ {topic:"Kubus • Penalaran Lipatan", q:"Susunan 6 persegi dengan 4 persegi bertemu pada satu titik tidak dapat menjadi kubus. Alasannya adalah …", opts:["Jumlah perseginya kurang dari 6","Satu titik sudut kubus hanya ditempati oleh 3 sisi","Persegi-perseginya harus berbeda ukuran","Kubus tidak memiliki titik sudut"], ans:1, why:"Pada kubus, setiap titik sudut hanya merupakan pertemuan 3 sisi. Jika 4 persegi bertemu pada satu titik, susunan itu akan tumpang tindih saat dilipat."},
+ {topic:"Kubus • Sisi Berhadapan", q:"Pada jaring-jaring kubus, dua sisi yang saling berhadapan letaknya …", opts:["Selalu bersebelahan","Tidak pernah bersebelahan","Selalu tumpang tindih","Menempel pada satu rusuk yang sama"], ans:1, why:"Sisi yang berhadapan pada kubus tidak pernah bersebelahan dalam jaring-jaring. Keduanya selalu terpisah dan tidak berbagi rusuk."},
+ {topic:"Balok", q:"Jaring-jaring balok terdiri atas …", opts:["6 buah persegi yang sama besar","6 buah persegi panjang dalam 3 pasang yang sama besar","4 buah persegi panjang dan 2 buah lingkaran","2 buah segitiga dan 3 buah persegi panjang"], ans:1, why:"Balok memiliki 6 sisi berbentuk persegi panjang. Sisi-sisi yang berhadapan sama besar, sehingga terbentuk 3 pasang persegi panjang yang sama besar."},
+ {topic:"Balok • Alas dan Tutup", q:"Pada jaring-jaring balok, ukuran alas dan tutup balok adalah …", opts:["Berbeda besar","Sama besar","Alas selalu lebih besar daripada tutup","Tutup selalu berbentuk persegi"], ans:1, why:"Alas dan tutup balok adalah sepasang sisi yang berhadapan, sehingga ukuran dan bentuknya selalu sama besar."},
+ {topic:"Prisma Segitiga", q:"Jaring-jaring prisma segitiga terdiri atas …", opts:["1 buah persegi dan 4 buah segitiga","2 buah segitiga dan 3 buah persegi panjang","2 buah lingkaran dan 1 buah persegi panjang","6 buah persegi panjang"], ans:1, why:"Prisma segitiga memiliki 2 sisi berbentuk segitiga sebagai alas dan tutup, serta 3 sisi tegak berbentuk persegi panjang."},
+ {topic:"Limas Segiempat", q:"Jaring-jaring limas segiempat terdiri atas …", opts:["2 buah segitiga dan 3 buah persegi panjang","1 buah lingkaran dan 1 buah juring lingkaran","1 buah persegi dan 4 buah segitiga","6 buah persegi"], ans:2, why:"Limas segiempat memiliki alas berbentuk persegi dan 4 sisi tegak berbentuk segitiga yang bertemu pada satu titik puncak."},
+ {topic:"Tabung", q:"Jaring-jaring tabung terdiri atas …", opts:["1 buah lingkaran dan 1 buah juring lingkaran","2 buah lingkaran dan 1 buah persegi panjang","6 buah persegi","2 buah segitiga dan 3 buah persegi panjang"], ans:1, why:"Tabung memiliki alas dan tutup berbentuk lingkaran, serta selimut berbentuk persegi panjang apabila dibuka dan direntangkan."},
+ {topic:"Tabung • Selimut Tabung", q:"Apabila selimut tabung dibuka dan direntangkan, panjang persegi panjangnya sama dengan …", opts:["Tinggi tabung","Diameter alas tabung","Keliling alas tabung","Jari-jari alas tabung"], ans:2, why:"Selimut tabung melingkari alas tepat satu putaran penuh, sehingga panjangnya harus sama dengan keliling alas. Adapun lebarnya sama dengan tinggi tabung."},
+ {topic:"Kerucut", q:"Jaring-jaring kerucut terdiri atas …", opts:["2 buah lingkaran dan 1 buah persegi panjang","1 buah persegi dan 4 buah segitiga","1 buah lingkaran dan 1 buah juring lingkaran","6 buah persegi panjang"], ans:2, why:"Kerucut memiliki alas berbentuk lingkaran dan selimut yang, apabila dibuka, berbentuk juring lingkaran."},
+ {topic:"Kerucut • Selimut Kerucut", q:"Pada jaring-jaring kerucut, panjang busur juring lingkaran harus sama dengan …", opts:["Tinggi kerucut","Keliling alas kerucut","Diameter alas kerucut","Garis pelukis kerucut"], ans:1, why:"Busur juring akan menempel tepat pada tepi alas lingkaran saat dilipat, sehingga panjang busurnya harus sama dengan keliling alas. Jari-jari juring itulah yang menjadi garis pelukis."},
+ {topic:"Bola", q:"Bangun ruang yang tidak memiliki jaring-jaring yang tepat adalah …", opts:["Kubus","Tabung","Bola","Prisma segitiga"], ans:2, why:"Bola tidak memiliki jaring-jaring yang tepat karena permukaannya melengkung ke segala arah dan tidak dapat direntangkan menjadi bidang datar."},
+ {topic:"Bola", q:"Permukaan bola tidak dapat dibuka menjadi satu bidang datar yang tepat karena …", opts:["Bola tidak memiliki sisi sama sekali","Apabila dibuka, permukaannya hanya menjadi potongan-potongan seperti kulit jeruk dan tidak rata secara sempurna","Bola ukurannya selalu terlalu besar","Bola tidak memiliki volume"], ans:1, why:"Seperti kulit jeruk yang dikupas, permukaan bola hanya dapat dilepas sebagai potongan-potongan lengkung. Potongan itu tidak dapat diratakan tanpa robek atau berkerut."},
+ {topic:"Penalaran • Syarat Jaring-Jaring", q:"Syarat agar rangkaian bangun datar dapat dilipat menjadi bangun ruang tertutup adalah …", opts:["Sisi-sisi yang bertemu harus sama panjang, tanpa tumpang tindih dan tanpa celah","Semua sisi yang bertemu boleh berbeda panjang","Boleh ada sisi yang tumpang tindih asalkan jumlah sisinya tepat","Boleh ada celah asalkan sebagian besar sisi sudah menempel"], ans:0, why:"Saat dilipat, setiap pasangan sisi yang bertemu harus sama panjang agar menempel dengan tepat. Jika ada yang tumpang tindih atau bercelah, rangkaian itu bukan jaring-jaring bangun ruang tersebut."}
+];
+var PAIRS=[
+ {left:"Kubus", right:"6 buah persegi"},
+ {left:"Balok", right:"3 pasang persegi panjang yang sama besar"},
+ {left:"Prisma segitiga", right:"2 segitiga + 3 persegi panjang"},
+ {left:"Limas segiempat", right:"1 persegi + 4 segitiga"},
+ {left:"Tabung", right:"2 lingkaran + 1 persegi panjang"},
+ {left:"Kerucut", right:"1 lingkaran + 1 juring lingkaran"},
+ {left:"Bola", right:"Tidak memiliki jaring-jaring yang tepat"},
+ {left:"Selimut tabung dibuka rata", right:"Persegi panjang"}
+];
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function show(id){["view-home","view-quiz","view-match"].forEach(function(v){document.getElementById(v).classList.toggle("hidden",v!==id)});window.scrollTo({top:0,behavior:"smooth"})}
+function goHome(){show("view-home")}
+function beep(ok){try{var ctx=window._ac||(window._ac=new (window.AudioContext||window.webkitAudioContext)());if(ctx.state==="suspended")ctx.resume();var o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=ok?880:220;g.gain.setValueAtTime(.12,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.25);o.start();o.stop(ctx.currentTime+.25)}catch(e){}}
+
+/* QUIZ */
+var qi=0,qScore=0,qAnswered=false,qHistory=[];
+function startQuiz(){qi=0;qScore=0;qHistory=[];show("view-quiz");document.getElementById("quiz-card").classList.remove("hidden");document.getElementById("quiz-result").classList.add("hidden");renderQ()}
+function svgFor(topic){
+ if(topic.indexOf("Kubus")===0) return '<svg width="110" height="82" viewBox="0 0 110 82"><g fill="#FEF3C7" stroke="#0F766E" stroke-width="2"><rect x="38" y="2" width="24" height="24"/><rect x="12" y="28" width="24" height="24"/><rect x="38" y="28" width="24" height="24"/><rect x="64" y="28" width="24" height="24"/><rect x="90" y="28" width="20" height="24"/><rect x="38" y="54" width="24" height="24"/></g></svg>';
+ if(topic.indexOf("Tabung")===0) return '<svg width="130" height="70" viewBox="0 0 130 70"><g fill="#CCEBE6" stroke="#0F766E" stroke-width="2"><circle cx="22" cy="35" r="16"/><rect x="46" y="12" width="52" height="46"/><circle cx="116" cy="35" r="12"/></g></svg>';
+ if(topic.indexOf("Kerucut")===0) return '<svg width="120" height="70" viewBox="0 0 120 70"><g fill="#FDE8E5" stroke="#0F766E" stroke-width="2"><path d="M20 55 A28 28 0 0 1 62 12 L42 35 Z"/><circle cx="92" cy="42" r="16"/></g></svg>';
+ if(topic.indexOf("Bola")===0) return '<svg width="90" height="70" viewBox="0 0 90 70"><g fill="#FEF3C7" stroke="#0F766E" stroke-width="2"><path d="M10 35 Q25 10 45 35 Q25 60 10 35"/><path d="M30 35 Q45 8 62 35 Q45 62 30 35"/><path d="M52 35 Q65 12 80 35 Q65 58 52 35"/></g></svg>';
+ return "";
+}
+function renderQ(){
+ qAnswered=false;var item=QUESTIONS[qi];
+ document.getElementById("q-progress-label").textContent="Soal "+(qi+1)+" dari "+QUESTIONS.length;
+ document.getElementById("q-score-label").textContent="Skor: "+qScore;
+ document.getElementById("q-bar").style.width=Math.round(((qi)/QUESTIONS.length)*100)+"%";
+ document.getElementById("q-topic").textContent=item.topic;
+ document.getElementById("q-text").textContent=item.q;
+ document.getElementById("q-visual").innerHTML=svgFor(item.topic);
+ var box=document.getElementById("q-options");box.innerHTML="";
+ var letters=["A","B","C","D"];
+ var order=shuffle(item.opts.map(function(_,i){return i}));
+ order.forEach(function(origIdx){
+   var b=document.createElement("button");b.className="opt";b.innerHTML='<span class="letter">'+letters[box.children.length]+'</span><span>'+item.opts[origIdx]+'</span>';
+   b.addEventListener("click",function(){answerQ(b,origIdx)});box.appendChild(b);
+ });
+ var fb=document.getElementById("q-feedback");fb.className="feedback";fb.innerHTML="";
+ var nx=document.getElementById("q-next");nx.disabled=true;nx.textContent=(qi===QUESTIONS.length-1)?"Lihat Hasil ✓":"Soal Berikutnya →";
+}
+function answerQ(btn,origIdx){
+ if(qAnswered)return;qAnswered=true;var item=QUESTIONS[qi];var correct=origIdx===item.ans;
+ if(correct)qScore++;qHistory.push({q:item.q,correct:correct,why:item.why,chosen:item.opts[origIdx],answer:item.opts[item.ans]});
+ var opts=document.querySelectorAll("#q-options .opt");
+ opts.forEach(function(o){o.disabled=true});
+ // find correct button by matching text via history: re-evaluate by stored mapping - simpler: mark clicked, and mark the one whose click would be correct by data check not stored; we stored order in closure not accessible, so use text compare
+ opts.forEach(function(o){if(o.textContent.indexOf(item.opts[item.ans])>-1){o.classList.add("correct")}else if(o!==btn){o.classList.add("dim")}});
+ if(!correct)btn.classList.add("wrong"); else btn.classList.add("correct");
+ beep(correct);
+ var fb=document.getElementById("q-feedback");fb.className="feedback show "+(correct?"ok":"no");
+ fb.innerHTML=(correct?"<strong>✅ Benar! +1 poin</strong>":"<strong>❌ Belum tepat.</strong> Jawaban yang benar: <b>"+item.opts[item.ans]+"</b><br>") + item.why;
+ document.getElementById("q-score-label").textContent="Skor: "+qScore;
+ document.getElementById("q-bar").style.width=Math.round(((qi+1)/QUESTIONS.length)*100)+"%";
+ document.getElementById("q-next").disabled=false;
+}
+function nextQuestion(){ if(qi<QUESTIONS.length-1){qi++;renderQ()} else {finishQuiz()} }
+function finishQuiz(){
+ document.getElementById("quiz-card").classList.add("hidden");var r=document.getElementById("quiz-result");r.classList.remove("hidden");
+ document.getElementById("q-final-score").textContent=qScore+" / "+QUESTIONS.length;
+ var pct=qScore/QUESTIONS.length;var stars=pct>=0.85?"★★★":pct>=0.6?"★★☆":pct>=0.35?"★☆☆":"☆☆☆";
+ document.getElementById("q-stars").textContent=stars;
+ document.getElementById("q-final-msg").textContent=pct>=0.85?"Luar biasa! Kamu sudah memahami jaring-jaring semua bangun ruang dengan sangat baik.":pct>=0.6?"Bagus! Kamu sudah memahami sebagian besar materi. Perhatikan kembali soal yang belum tepat di bawah ini.":"Tidak apa-apa, terus berlatih. Baca kembali alasannya pada setiap soal di bawah ini, kemudian coba lagi.";
+ var rev=document.getElementById("q-review");rev.innerHTML="<h3 style='font-size:16px'>Pembahasan Semua Soal</h3>";
+ qHistory.forEach(function(h,i){var d=document.createElement("div");d.className="review-item";d.innerHTML="<b>"+(i+1)+". "+h.q+" <span class='tag "+(h.correct?"tag-ok":"tag-no")+"'>"+(h.correct?"Benar":"Belum Tepat")+"</span></b><span style='color:var(--muted)'>Jawabanmu: "+h.chosen+"<br>Jawaban benar: "+h.answer+"<br>"+h.why+"</span>";rev.appendChild(d)});
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* MATCH */
+var mSelected=null,mMatched=0,mAttempts=0,mWrong=0;
+function startMatch(){
+ mSelected=null;mMatched=0;mAttempts=0;mWrong=0;show("view-match");
+ document.getElementById("match-result").classList.add("hidden");
+ var fb=document.getElementById("m-feedback");fb.className="feedback";fb.innerHTML="";
+ updateMatchBar();
+ var leftBox=document.getElementById("m-left");leftBox.innerHTML="";
+ shuffle(PAIRS.slice()).forEach(function(p){var b=document.createElement("button");b.type="button";b.className="match-item";b.textContent=p.left;b.dataset.key=p.left;b.addEventListener("click",function(){selectLeft(b)});leftBox.appendChild(b)});
+ var rightBox=document.getElementById("m-right");rightBox.innerHTML="";
+ shuffle(PAIRS.slice()).forEach(function(p){var b=document.createElement("button");b.type="button";b.className="match-item";b.textContent=p.right;b.dataset.key=p.left;b.addEventListener("click",function(){selectRight(b)});rightBox.appendChild(b)});
+}
+function updateMatchBar(){document.getElementById("m-progress-label").textContent="Terpasang: "+mMatched+" dari 8";document.getElementById("m-score-label").textContent="Percobaan: "+mAttempts+" • Salah: "+mWrong;document.getElementById("m-bar").style.width=(mMatched/8*100)+"%"}
+function selectLeft(btn){if(btn.classList.contains("matched"))return;document.querySelectorAll("#m-left .match-item").forEach(function(x){x.classList.remove("selected")});btn.classList.add("selected");mSelected=btn}
+function selectRight(btn){
+ if(btn.classList.contains("matched"))return;var fb=document.getElementById("m-feedback");
+ if(!mSelected){fb.className="feedback show no";fb.innerHTML="<strong>Pilih dahulu bangun ruangnya.</strong> Ketuk satu kartu di kolom kiri, kemudian ketuk pasangannya di kolom kanan.";return}
+ mAttempts++;
+ if(btn.dataset.key===mSelected.dataset.key){
+   btn.classList.add("matched");mSelected.classList.add("matched");mSelected.classList.remove("selected");mSelected=null;mMatched++;beep(true);
+   fb.className="feedback show ok";fb.innerHTML="<strong>✅ Tepat!</strong> Pasangan itu benar. Terpasang "+mMatched+" dari 8.";
+   updateMatchBar();if(mMatched===8)finishMatch();
+ } else {
+   mWrong++;beep(false);btn.classList.add("shake");setTimeout(function(){btn.classList.remove("shake")},400);
+   fb.className="feedback show no";fb.innerHTML="<strong>❌ Belum tepat.</strong> Itu bukan pasangan untuk <b>"+mSelected.textContent+"</b>. Coba perhatikan lagi susunan sisi-sisinya.";
+   updateMatchBar();
+ }
+}
+function finishMatch(){
+ var r=document.getElementById("match-result");r.classList.remove("hidden");
+ document.getElementById("m-final-score").textContent="8 / 8 pasangan";
+ document.getElementById("m-final-msg").textContent="Kamu menyelesaikan permainan dalam "+mAttempts+" percobaan dengan "+mWrong+" kali kesalahan. "+(mWrong===0?"Sempurna — tanpa kesalahan sama sekali!":mWrong<=3?"Hasil yang bagus!":"Terus berlatih agar semakin tepat dan cepat.");
+ r.scrollIntoView({behavior:"smooth"});
+}
+
+/* EVENT BINDINGS — semua klik diikat lewat addEventListener, bukan atribut onclick inline,
+   agar tetap berfungsi di webview yang memblokir handler inline. */
+function bindCard(id,fn){
+ var el=document.getElementById(id);if(!el)return;
+ el.addEventListener("click",fn);
+ el.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();fn()}});
+}
+bindCard("card-quiz",startQuiz);
+bindCard("card-match",startMatch);
+document.querySelectorAll("[data-action]").forEach(function(el){
+ el.addEventListener("click",function(){
+  var a=el.getAttribute("data-action");
+  if(a==="quiz")startQuiz();
+  else if(a==="match")startMatch();
+  else if(a==="home")goHome();
+  else if(a==="next")nextQuestion();
+ });
+});
+</script>
+</body>
+</html>
